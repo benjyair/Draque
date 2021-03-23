@@ -1,0 +1,23 @@
+kind: pipeline
+type: docker
+name: android
+
+steps:
+  - name: build
+    image: benjyair/android-env
+#    image: benjyair/android-env-gradle
+    commands:
+      - gradle assembleEngRelease
+
+  - name: upload
+    image: minio/mc
+    environment:
+      ACCESS_KEY:
+        from_secret: minio_access_key
+      SECRET_KEY:
+        from_secret: minio_secret_key
+    commands:
+      - mc alias set minio http://192.168.192.1:9090 $ACCESS_KEY $SECRET_KEY
+      - cd app/build/outputs/apk/eng/release
+      - apk_file=`ls | head -1`
+      - mc cp $apk_file minio/draque
