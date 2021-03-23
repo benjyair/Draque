@@ -1,17 +1,16 @@
 # Draque
 本项目是一个基本的 Android 项目，包含了 Drone 自动构建的脚本和对应的 Docker 镜像的源文件。
-[![Build Status](http://192.168.192.1:9080/api/badges/benjyair/Draque/status.svg)](http://192.168.192.1:9080/benjyair/Draque)
 
 ### 项目指引
-1、基于 Ubuntu 的镜像
+* 1、基于 Ubuntu 的镜像
 文件位置：`docker/Dockerfile`
 镜像：`docker pull benjyair/android-env:latest`
 
-2、基于 Gradle 的镜像
+* 2、基于 Gradle 的镜像
 文件位置：`docker_gradle/Dockerfile`
 镜像：`docker pull benjyair/android-env-gradle:latest`
 
-3、基于 Drone 和 MinIO 的 CI 构建脚本
+* 3、基于 Drone 和 MinIO 的 CI 构建脚本
 `.drone.yml`
 
 ### 使用指南
