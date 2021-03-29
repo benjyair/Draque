@@ -21,3 +21,12 @@ steps:
       - cd app/build/outputs/apk/eng/release
       - apk_file=`ls | head -1`
       - mc cp $apk_file minio/draque
+  - name: notify
+    image: busybox
+    environment:
+      CHANIFY_TOKEN:
+        from_secret: chanify_token
+    commands:
+      - cd app/build/outputs/apk/eng/release
+      - apk_file=`ls | head -1`
+      - curl --form-string "text=Build and upload Success. \n version=$apk_file" "http://192.168.1.100:9070/v1/sender/$CHANIFY_TOKEN"
