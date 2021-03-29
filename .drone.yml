@@ -21,7 +21,8 @@ steps:
       - cd app/build/outputs/apk/eng/release
       - apk_file=`ls | head -1`
       - mc cp $apk_file minio/draque
-  - name: notify
+
+  - name: notify-success
     image: curlimages/curl
     environment:
       CHANIFY_TOKEN:
@@ -29,4 +30,15 @@ steps:
     commands:
       - cd app/build/outputs/apk/eng/release
       - apk_file=`ls | head -1`
-      - curl --form-string "text=Build and upload Success. \n version=$apk_file" "http://192.168.1.100:9070/v1/sender/$CHANIFY_TOKEN"
+      - curl --form-string "text=Build and upload Success. version: $apk_file" "http://192.168.1.100:9070/v1/sender/$CHANIFY_TOKEN"
+
+  - name: notify-failure
+    image: curlimages/curl
+    environment:
+      CHANIFY_TOKEN:
+        from_secret: chanify_token
+    commands:
+      - curl --form-string "text=Build and upload failure." "http://192.168.1.100:9070/v1/sender/$CHANIFY_TOKEN"
+    when:
+      status:
+        - failure
