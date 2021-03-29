@@ -7,7 +7,7 @@ steps:
     image: benjyair/android-env
 #    image: benjyair/android-env-gradle
     commands:
-      - gradle assembleEngRelease
+      - gradle clean
 
   - name: upload
     image: minio/mc
