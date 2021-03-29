@@ -22,7 +22,7 @@ steps:
       - apk_file=`ls | head -1`
       - mc cp $apk_file minio/draque
   - name: notify
-    image: busybox
+    image: curlimages/curl
     environment:
       CHANIFY_TOKEN:
         from_secret: chanify_token
